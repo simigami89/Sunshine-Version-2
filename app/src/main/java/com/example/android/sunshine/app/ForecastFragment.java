@@ -80,6 +80,10 @@ public class ForecastFragment extends Fragment {
         return rootView;
     }
 
+    public class getWeatherDataFromJSON{
+        
+    }
+
     public class FetchWeatherTask extends AsyncTask<String, Void, Void>{
 
         private final String LOG_TAG = FetchWeatherTask.class.getName();
