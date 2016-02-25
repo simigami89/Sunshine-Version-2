@@ -1,5 +1,6 @@
 package com.example.android.sunshine.app;
 
+import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
@@ -32,6 +33,7 @@ public class MainActivity extends ActionBarActivity {
                     .add(R.id.container, new ForecastFragment())
                     .commit();
         }
+        PreferenceManager.setDefaultValues(this, R.xml.pref_general, false);
     }
 
 
