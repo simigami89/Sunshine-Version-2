@@ -77,8 +77,9 @@
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="location_key" translatable="false">location</string>
     <string name="location_value">Moscow,ru</string>
-    <string name="units">Metric</string>
-    <string name="metric">metric</string>
-    <string name="pref_unit_keys">metric</string>
+
+    <string name="pref_default_unit_metric">metric</string>
+    <string name="pref_unit_keys">Units</string>
+    <string name="map_location_string">Map location</string>
 
 </resources>

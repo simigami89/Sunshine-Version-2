@@ -9,10 +9,10 @@
 
     <ListPreference
         android:title="Units"
-        android:defaultValue="false"
+        android:key="@string/pref_unit_keys"
+        android:defaultValue="@string/pref_default_unit_metric"
         android:entryValues="@array/pref_unit_values"
         android:entries="@array/pref_unit_values"
-        android:key="@string/pref_unit_keys"
         >
     </ListPreference>
 

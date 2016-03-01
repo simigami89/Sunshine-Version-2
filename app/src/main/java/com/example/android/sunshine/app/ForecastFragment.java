@@ -67,9 +67,7 @@ public class ForecastFragment extends Fragment {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_refresh) {
-            SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
-            String syncConnPref = sharedPref.getString(getString(R.string.location_key), getString(R.string.location_value));
-            new FetchWeatherTask().execute(syncConnPref);
+            updateWeather();
             return true;
         }
         else if (id == R.id.action_settings){
@@ -81,16 +79,21 @@ public class ForecastFragment extends Fragment {
     }
 
 
+
+    private void updateWeather() {
+        SharedPreferences sharedPref = PreferenceManager.getDefaultSharedPreferences(getActivity());
+        String syncConnPref = sharedPref.getString(getString(R.string.location_key), getString(R.string.location_value));
+        new FetchWeatherTask().execute(syncConnPref);
+    }
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
         weakForecast = new ArrayList<>();
-        weakForecast.add("Today- cold");
-        weakForecast.add("Tomorrow - warm");
-        weakForecast.add("Monday- hot");
-        weakForecast.add("Thursday- cold");
+        updateWeather();
         mForecastAdapter = new ArrayAdapter<String>(getActivity(), R.layout.list_item_forecast, R.id.list_item_forecast_textview, weakForecast);
 
         mForecastAdapter.setNotifyOnChange(true);
@@ -119,6 +122,10 @@ public class ForecastFragment extends Fragment {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd.MM.yyyy hh:mm");
         resultString = simpleDateFormat.format(date);
         return resultString;
+    }
+
+    private String roundTemperature(String temperature){
+        return String.valueOf(Math.round(Double.valueOf(temperature)));
     }
 
     private String [] getWeatherDataFromJSON(String jsonString, int numDays)throws JSONException{
@@ -154,10 +161,10 @@ public class ForecastFragment extends Fragment {
             result[i]+= jsonObject1.optString(OWM_DESCRIPTION);
 
             JSONObject jsonObjectTemperatureMax = jsonObjectDay.getJSONObject(OWM_TEMPERATURE);
-            result[i]+=" T_max: "+jsonObjectTemperatureMax.optString(OWM_MAX);
+            result[i]+=" T_max: "+roundTemperature(jsonObjectTemperatureMax.optString(OWM_MAX));
 
             JSONObject jsonObjectTemperatureMin = jsonObjectDay.getJSONObject(OWM_TEMPERATURE);
-            result[i]+=" T_min: "+jsonObjectTemperatureMin.optString(OWM_MIN);
+            result[i]+=" T_min: "+roundTemperature(jsonObjectTemperatureMin.optString(OWM_MIN));
 
             weakForecast.add(result[i]);
         }
